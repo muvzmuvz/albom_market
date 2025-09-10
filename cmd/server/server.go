@@ -22,7 +22,7 @@ func StartServer() error {
 	albumRoutes := router.Group("/albums")
 	{
 		albumRoutes.GET("", albumHandlers.GetAlbums)
-		albumRoutes.GET("/:id", albumHandlers.AlbumForId)
+		albumRoutes.GET("/:id", middleware.AuthMiddleware(), albumHandlers.AlbumForId)
 		albumRoutes.GET("/search", albumHandlers.SearchAlbums)
 		albumRoutes.POST("", middleware.AuthMiddleware(), albumHandlers.AddAlbum)
 		albumRoutes.PUT("/:id", middleware.AuthMiddleware(), albumHandlers.UpdateAlbum)
