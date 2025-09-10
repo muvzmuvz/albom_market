@@ -27,7 +27,6 @@ func RegUser(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	//
 
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(validUser.Password), bcrypt.DefaultCost)
 	if err != nil {
@@ -77,7 +76,7 @@ func Login(c *gin.Context) {
 		token,
 		3600*24*3,
 		"/",
-		"",
+		"localhost",
 		false,
 		true,
 	)
