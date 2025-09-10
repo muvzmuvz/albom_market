@@ -10,7 +10,7 @@ import (
 
 func StartServer() error {
 	router := gin.Default()
-	trustErr := router.SetTrustedProxies([]string{"127.0.0.2"})
+	trustErr := router.SetTrustedProxies([]string{"127.0.0.1", "localhost"})
 	router.Use(utils.LoggerMiddleware())
 	router.Static("/uploads", "./uploads")
 	albumRoutes := router.Group("/albums")
@@ -25,7 +25,8 @@ func StartServer() error {
 
 	userRoutes := router.Group("/users")
 	{
-		userRoutes.GET("", middleware.AuthMiddleware(), middleware.RequireRole("admin"), authHandlers.GetAllUsersHandler)
+		userRoutes.GET("", middleware.AuthMiddleware(), middleware.RequireRole("admin"),
+			authHandlers.GetAllUsersHandler)
 	}
 
 	authRoutes := router.Group("/auth")
